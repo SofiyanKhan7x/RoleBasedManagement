@@ -4,9 +4,12 @@ import com.neon.RoleBasedManagement.model.Users;
 import com.neon.RoleBasedManagement.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class ManagerController {
@@ -14,9 +17,20 @@ public class ManagerController {
     @Autowired
     private ManagerService managerService;
 
+
+    //Only Admin can create the new manager
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addManager")
     public Users addManager(@RequestBody Users users){
         return managerService.addManager(users);
     }
+
+    //Only Admin can see the all managers
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/getAllManagers")
+    public List<Users> getAllManagers(){
+        return managerService.getAllManagers();
+    }
+
+
 }

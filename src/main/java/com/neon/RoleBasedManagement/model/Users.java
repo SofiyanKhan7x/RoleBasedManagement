@@ -22,8 +22,8 @@ public class Users {
 
     @ManyToOne
     @JoinColumn(name = "parent_id")
-//    @JsonIgnoreProperties({ "parent"})
+    @JsonIgnoreProperties({"parent"})
     private Users parent; // Who created this user
 
-    // getters & setters
+
 }
