@@ -2,12 +2,10 @@ package com.neon.RoleBasedManagement.controller;
 
 import com.neon.RoleBasedManagement.model.Users;
 import com.neon.RoleBasedManagement.service.ManagerService;
+import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,6 +28,13 @@ public class ManagerController {
     @GetMapping("/getAllManagers")
     public List<Users> getAllManagers(){
         return managerService.getAllManagers();
+    }
+
+    //Only Admin can update manager
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/updateManager/{id}")
+    public Users updateManager(@PathVariable Long id, @RequestBody Users users){
+        return managerService.updateManager(id,users);
     }
 
 

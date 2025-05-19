@@ -26,4 +26,13 @@ public class ManagerService {
     public List<Users> getAllManagers() {
         return userRepo.findByRole(Role.MANAGER);
     }
+
+    public Users updateManager(Long id, Users users) {
+        Users existUser = userRepo.findById(Math.toIntExact(id)).orElseThrow(() -> new RuntimeException("user not found with this id "+id));
+        existUser.setUsername(users.getUsername());
+        existUser.setPassword(encoder.encode(users.getPassword()));
+        existUser.setRole(users.getRole());
+        existUser.setParent(users.getParent());
+        return userRepo.save(existUser);
+    }
 }
