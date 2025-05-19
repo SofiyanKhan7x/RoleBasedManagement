@@ -35,12 +35,21 @@ public class UserService {
         return userRepo.findAll();
     }
 
-    public String verify(Users users) {
+    public String verify(Users users) throws RuntimeException{
+
+        Users dbUser = userRepo.findByUsername(users.getUsername());
+        if (dbUser == null) {
+            throw new RuntimeException("User not found");
+        }
+
         Authentication authentication =
                 authManager.authenticate(new UsernamePasswordAuthenticationToken(users.getUsername(), users.getPassword()));
 
         if (authentication.isAuthenticated())
-            return  jwtService.generateToken(users.getUsername(),users.getId(), users.getRole().toString());
+            return  jwtService.generateToken(dbUser.getUsername(),dbUser.getId(), dbUser.getRole().toString());
+
+
+
 
         return "fail!";
     }

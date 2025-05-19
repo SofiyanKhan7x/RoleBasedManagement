@@ -36,9 +36,10 @@ public class SecurityConfig {
        return http
                .csrf(customizer -> customizer.disable())
                .authorizeHttpRequests(request -> request
-                       .requestMatchers("register","login")
+                       .requestMatchers("/register","/login")
                        .permitAll()
                        .anyRequest().authenticated())
+                  .authenticationProvider(authenticationProvider())
 //               .formLogin(Customizer.withDefaults())
                .httpBasic(Customizer.withDefaults())
                .sessionManagement(session ->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -54,6 +55,7 @@ public class SecurityConfig {
        provider.setUserDetailsService(userDetailsService);
        return provider;
    }
+
 
    @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {

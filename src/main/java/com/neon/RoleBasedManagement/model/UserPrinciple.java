@@ -22,7 +22,7 @@ public class UserPrinciple implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 //        return Collections.singleton(new SimpleGrantedAuthority("ADMIN"));
-        return List.of(new SimpleGrantedAuthority("ROLE_" + users.getRole().toString()));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + users.getRole().name()));
     }
 
     @Override
