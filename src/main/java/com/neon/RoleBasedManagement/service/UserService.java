@@ -49,8 +49,6 @@ public class UserService {
             return  jwtService.generateToken(dbUser.getUsername(),dbUser.getId(), dbUser.getRole().toString());
 
 
-
-
         return "fail!";
     }
 }

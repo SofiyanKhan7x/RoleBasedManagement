@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ManagerService {
@@ -27,12 +28,23 @@ public class ManagerService {
         return userRepo.findByRole(Role.MANAGER);
     }
 
+
     public Users updateManager(Long id, Users users) {
-        Users existUser = userRepo.findById(Math.toIntExact(id)).orElseThrow(() -> new RuntimeException("user not found with this id "+id));
+        Users existUser = userRepo.findById(id).orElseThrow(() -> new RuntimeException("user not found with this id "+id));
         existUser.setUsername(users.getUsername());
         existUser.setPassword(encoder.encode(users.getPassword()));
         existUser.setRole(users.getRole());
         existUser.setParent(users.getParent());
         return userRepo.save(existUser);
     }
+
+    public void deleteManager(Long id) {
+        Optional<Users> existUser = userRepo.findById(id);
+       if (existUser.isEmpty()){
+           throw new RuntimeException("User not found!");
+       }
+       userRepo.deleteById(id);
+    }
+
+
 }

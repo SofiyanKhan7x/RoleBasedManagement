@@ -2,7 +2,6 @@ package com.neon.RoleBasedManagement.controller;
 
 import com.neon.RoleBasedManagement.model.Users;
 import com.neon.RoleBasedManagement.service.ManagerService;
-import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -30,11 +29,22 @@ public class ManagerController {
         return managerService.getAllManagers();
     }
 
+
+
     //Only Admin can update manager
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/updateManager/{id}")
     public Users updateManager(@PathVariable Long id, @RequestBody Users users){
         return managerService.updateManager(id,users);
+    }
+
+    //Only Admin can delete the manager
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("deleteManager/{id}")
+    public String deleteManager(@PathVariable Long id){
+        managerService.deleteManager(id);
+        return "Manager Deleted Successfully!";
+
     }
 
 
