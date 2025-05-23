@@ -24,8 +24,8 @@ public class ManagerService {
         return userRepo.save(users);
     }
 
-    public List<Users> getAllManagers() {
-        return userRepo.findByRole(Role.MANAGER);
+    public List<Users> getAllManagers(Long id) {
+        return userRepo.findByParentId(id);
     }
 
 
@@ -34,7 +34,7 @@ public class ManagerService {
         existUser.setUsername(users.getUsername());
         existUser.setPassword(encoder.encode(users.getPassword()));
         existUser.setRole(users.getRole());
-        existUser.setParent(users.getParent());
+//        existUser.setParent(users.getParent());
         return userRepo.save(existUser);
     }
 

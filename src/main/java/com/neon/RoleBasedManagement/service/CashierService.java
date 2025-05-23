@@ -23,15 +23,15 @@ public class CashierService {
         return userRepo.save(users);
     }
 
-    public List<Users> getAllCashier() {
-        return userRepo.findByRole(Role.CASHIER);
+    public List<Users> getAllCashier(Long id) {
+        return userRepo.findByParentIdAndRole(id,Role.CASHIER);
     }
 
     public Users updateCashier(Long id, Users users) {
        Users existUser = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User not found! "+id));
        existUser.setUsername(users.getUsername());
        existUser.setPassword(encoder.encode(users.getPassword()));
-       existUser.setParent(users.getParent());
+//       existUser.setParent(users.getParent());
        existUser.setRole(users.getRole());
 
        return userRepo.save(existUser);
@@ -39,11 +39,8 @@ public class CashierService {
     }
 
     public void deleteCashier(Long id) {
-        Optional<Users> existUser = userRepo.findById(id);
-        if (existUser.isPresent()){
-            userRepo.deleteById(id);
-        }else {
-            throw new RuntimeException("User not found!");
-        }
+        Users existUser = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User not found!"));
+        userRepo.deleteById(existUser.getId());
     }
+
 }
