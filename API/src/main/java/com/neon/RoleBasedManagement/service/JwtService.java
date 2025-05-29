@@ -20,6 +20,9 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String secretKey;
 
+    private static final long JWT_EXPIRATION_MS = 1000 * 60 * 60 * 24;
+
+
 //Optional
 //    public JwtService() throws NoSuchAlgorithmException {
 //        KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
@@ -37,7 +40,7 @@ public class JwtService {
                 .add(claims)
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+                .expiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION_MS))
                 .and()
                 .signWith(getKey())
                 .compact();
