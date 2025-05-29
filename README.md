@@ -48,6 +48,6 @@ A Spring Boot application implementing secure JWT-based authentication and role-
 ### Installation
 
 ```bash
-git clone https://github.com/yourusername/RoleBasedManagement.git
+git clone https://github.com/SofiyanKhan7x/RoleBasedManagement.git
 cd RoleBasedManagement
 mvn clean install
